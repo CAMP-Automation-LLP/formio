@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: formio
+  IMAGE_NAME: ${{ github.event.repository.name }}
   IMAGE_TAG: latest
 jobs:
   publish:
@@ -25,6 +25,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build, Tag and push image to Container Registry
         run: |
-          docker build --tag ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} .
+          docker build --tag ${REGISTRY}/${{ github.repository }}:${IMAGE_TAG} .
           docker images
-          docker push ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+          docker push ${REGISTRY}/${{ github.repository }}:${IMAGE_TAG}
